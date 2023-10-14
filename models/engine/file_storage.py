@@ -3,7 +3,7 @@
 
 import json
 import os.path
-
+from models.user import User
 
 class FileStorage:
     """serializes instances to a JSON file and deserializes"""
@@ -31,7 +31,9 @@ class FileStorage:
         """Returns a dict of classes and their values"""
         from models.base_model import BaseModel
 
-        classes = {"BaseModel": BaseModel}
+        classes = {
+                "BaseModel": BaseModel,
+                "User:": User}
         return classes
 
 
