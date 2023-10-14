@@ -28,6 +28,7 @@ class FileStorage:
             json.dump(d_storage, f)
 
     def classes(self):
+        """Returns a dict of classes and their values"""
         from models.base_model import BaseModel
 
         classes = {"BaseModel": BaseModel}
