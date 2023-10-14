@@ -4,6 +4,7 @@
 import json
 import os.path
 
+
 class FileStorage:
     """serializes instances to a JSON file and deserializes"""
     __file_path = "file.json"
@@ -26,6 +27,14 @@ class FileStorage:
                 d_storage[key] = value.to_dict()
             json.dump(d_storage, f)
 
+    def classes(self):
+        from models.base_model import BaseModel
+
+        classes = {"BaseModel": BaseModel}
+        return classes
+
+
+
     def reload(self):
         """
         deserializes the JSON file to (only if the JSON file
@@ -35,9 +44,8 @@ class FileStorage:
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, "r") as f:
                 dfile = json.load(f)
-
-#            for key, value in dfile.items():
- #               class_name = value.get("__class__")
-  #              if class_name in models:
-   #                 obj = models[class_name](**value)
-    #                self.__objects[key] = obj
+                dfile = {k: self.classes()[v["__class__"]](**v)
+                        for k, v in dfile.items()}
+                self.__objects = dfile
+        else:
+            return
