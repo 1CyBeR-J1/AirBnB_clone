@@ -5,6 +5,7 @@ import uuid
 from datetime import datetime
 from models import storage
 
+
 class BaseModel():
     """defines all common attributes/methods for other classes"""
 
@@ -22,8 +23,8 @@ class BaseModel():
 
     def __str__(self):
         """string representation of the base class"""
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+                self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """updates the inst attr updated_at with the curr datetime"""

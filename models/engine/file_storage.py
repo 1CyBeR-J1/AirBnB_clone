@@ -4,6 +4,7 @@
 import json
 import os.path
 
+
 class FileStorage:
     """serializes instances to a JSON file and deserializes"""
     __file_path = "file.json"
@@ -15,8 +16,8 @@ class FileStorage:
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
-        self.__objects["{}.{}".format(obj.__class__.__name__,
-            obj.id)] = obj
+        self.__objects["{}.{}".format(
+            obj.__class__.__name__, obj.id)] = obj
 
     def save(self):
         """ serializes __objects to the JSON file"""
@@ -46,8 +47,6 @@ class FileStorage:
                 "Review": Review}
         return classes
 
-
-
     def reload(self):
         """
         deserializes the JSON file to (only if the JSON file
@@ -57,8 +56,8 @@ class FileStorage:
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, "r") as f:
                 dfile = json.load(f)
-                dfile = {k: self.classes()[v["__class__"]](**v)
-                        for k, v in dfile.items()}
+                dfile = {k: self.classes()[v["__class__"]](
+                    **v) for k, v in dfile.items()}
                 self.__objects = dfile
         else:
             return

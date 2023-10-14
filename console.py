@@ -11,6 +11,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
     """the command interpreter"""
 
@@ -104,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
         if arg == "" or arg is None:
             print("** class name missing **")
         else:
-            w_arg =arg.split(' ')
+            w_arg = arg.split(' ')
             if w_arg[0] not in storage.classes():
                 print("** class doesn't exist **")
             elif len(w_arg) < 2:
@@ -117,14 +118,15 @@ class HBNBCommand(cmd.Cmd):
                     print("** attribute name missing **")
                 elif len(w_arg) < 4:
                     print("** value missing **")
-                else: 
+                else:
                     obj = storage.all()[inst]
                     attr_name = w_arg[2]
                     attr_value = w_arg[3]
                     if hasattr(obj, attr_name):
-                        attr_value = type(getattr(obj,
-                            attr_name))(attr_value)
+                        attr_value = type(getattr(
+                            obj, attr_name))(attr_value)
                         obj.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
