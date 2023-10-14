@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
                 if inst not in storage.all():
                     print("** no instance found **")
                 else:
-                    print(storage.all()[key])
+                    print(storage.all()[inst])
 
     def do_destroy(self, arg):
         """
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
                 if inst not in storage.all():
                     print("** no instance found **")
                 else:
-                    del storage.all()[key]
+                    del storage.all()[inst]
                     storage.save()
 
     def do_all(self, arg):
@@ -95,7 +95,30 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by adding
         or updating attribute (save the change into the JSON file)
         """
-
+        if arg == "" or arg is None:
+            print("** class name missing **")
+        else:
+            w_arg =arg.split(' ')
+            if w_arg[0] not in storage.classes():
+                print("** class doesn't exist **")
+            elif len(w_arg) < 2:
+                print("** instance id missing **")
+            else:
+                inst = "{}.{}".format(w_arg[0], w_arg[1])
+                if inst not in storage.all():
+                    print("** no instance found **")
+                elif len(w_arg) < 3:
+                    print("** attribute name missing **")
+                elif len(w_arg) < 4:
+                    print("** value missing **")
+                else: 
+                    obj = storage.all()[inst]
+                    attr_name = w_arg[2]
+                    attr_value = w_arg[3]
+                    if hasattr(obj, attr_name):
+                        attr_value = type(getattr(obj,
+                            attr_name))(attr_value)
+                        obj.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
